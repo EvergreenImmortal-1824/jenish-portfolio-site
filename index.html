@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO meta tags injected by script.js from data.js -->
+  <title>Jenish Chhowala — DevOps &amp; Cloud Engineer</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+</head>
+
+<body>
+
+  <!-- Skip Navigation -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Background decorations (aria-hidden — purely visual) -->
+  <div class="bg-grid" aria-hidden="true"></div>
+  <canvas id="particlesCanvas" aria-hidden="true"></canvas>
+
+  <!-- ─── Header / Navigation ─── -->
+  <header>
+    <nav aria-label="Primary navigation">
+      <div class="nav-inner">
+        <a href="#hero" class="nav-logo" aria-label="Jenish Chhowala — Home">
+          <span class="nav-logo-prompt" aria-hidden="true">❯</span> ~/portfolio<span class="nav-logo-cursor" aria-hidden="true">_</span>
+        </a>
+
+        <button
+          class="nav-toggle"
+          id="navToggle"
+          aria-label="Open navigation menu"
+          aria-expanded="false"
+          aria-controls="primaryNavLinks"
+        >
+          <span class="nav-toggle-icon" aria-hidden="true">&#9776;</span>
+        </button>
+
+        <ul class="nav-links" id="primaryNavLinks" role="list">
+          <li><a href="#about"    class="nav-link">about</a></li>
+          <li><a href="#skills"   class="nav-link">skills</a></li>
+          <li><a href="#projects" class="nav-link">projects</a></li>
+          <li><a href="#terminal" class="nav-link">terminal</a></li>
+          <!-- Certifications link injected by script.js when certifications exist -->
+          <li id="certsNavItem" hidden><a href="#certifications" class="nav-link">certs</a></li>
+          <li><a href="#contact"  class="nav-link nav-cta">contact</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ─── Main Content ─── -->
+  <main id="main-content">
+    <div class="content-wrapper">
+
+      <!-- ─── Hero ─── -->
+      <section id="hero" class="hero reveal" aria-label="Introduction">
+        <div class="hero-content">
+          <p class="hero-greeting" aria-hidden="true">&#x250C;&#x2500;[jenish@portfolio]&#x2500;[~/]</p>
+
+          <h1 class="hero-name">
+            Hi, I'm <span class="hero-name-highlight">Jenish Chhowala</span><span class="hero-name-dot" aria-hidden="true">.</span>
+          </h1>
+
+          <div class="hero-title-wrapper" aria-label="I am a DevOps Engineer">
+            <span class="hero-static-text" aria-hidden="true">I am a</span>
+            <span id="typingText" aria-hidden="true"></span>
+          </div>
+
+          <p class="hero-tagline" id="heroTagline">
+            <!-- populated from portfolioData.profile.tagline -->
+          </p>
+
+          <!-- Tech strip -->
+          <div class="hero-tech-strip" aria-label="Key technologies">
+            <span class="tech-pill">AWS</span>
+            <span class="tech-pill">Linux</span>
+            <span class="tech-pill">Docker</span>
+            <span class="tech-pill">Kubernetes</span>
+            <span class="tech-pill">Jenkins</span>
+            <span class="tech-pill">Argo CD</span>
+            <span class="tech-pill">Terraform</span>
+            <span class="tech-pill">Git</span>
+          </div>
+
+          <!-- CTA Buttons -->
+          <div class="hero-buttons">
+            <a href="#projects" class="btn btn-primary">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              View Projects
+            </a>
+
+            <a id="resumeBtn" href="assets/resume.pdf" class="btn btn-outline" target="_blank" rel="noopener noreferrer" aria-label="Download resume PDF">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M7 1v8M3 9l4 4 4-4M2 13h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Resume
+            </a>
+
+            <a id="githubHeroBtn" href="#" class="btn btn-outline" target="_blank" rel="noopener noreferrer" aria-label="View GitHub profile">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+              </svg>
+              GitHub
+            </a>
+
+            <a id="linkedinHeroBtn" href="#" class="btn btn-outline" target="_blank" rel="noopener noreferrer" aria-label="View LinkedIn profile">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─── About ─── -->
+      <section id="about" class="reveal" aria-labelledby="aboutHeading">
+        <p class="section-label" aria-hidden="true">01. About</p>
+        <h2 id="aboutHeading" class="section-title">/<span class="accent">whoami</span></h2>
+        <div class="about-grid">
+          <div class="about-text" id="aboutText">
+            <!-- paragraphs injected from portfolioData.profile.about -->
+          </div>
+          <div class="focus-areas" id="focusAreas" aria-label="Areas of focus">
+            <!-- focus area cards injected from portfolioData.profile.focusAreas -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ─── Skills ─── -->
+      <section id="skills" class="reveal" aria-labelledby="skillsHeading">
+        <p class="section-label" aria-hidden="true">02. Skills</p>
+        <h2 id="skillsHeading" class="section-title">/<span class="accent">tech_stack</span></h2>
+        <div class="skills-grid" id="skillsGrid" aria-label="Technical skills by category">
+          <!-- skill categories injected from portfolioData.skills -->
+        </div>
+      </section>
+
+      <!-- ─── Projects ─── -->
+      <section id="projects" class="reveal" aria-labelledby="projectsHeading">
+        <p class="section-label" aria-hidden="true">03. Projects</p>
+        <h2 id="projectsHeading" class="section-title">/<span class="accent">projects</span></h2>
+
+        <!-- Filter buttons (injected by script.js) -->
+        <div id="projectFilters" class="project-filters" role="group" aria-label="Filter projects by category">
+          <!-- filter buttons injected dynamically -->
+        </div>
+
+        <!-- Project cards (injected by script.js) -->
+        <div class="projects-list" id="projectsGrid" aria-live="polite" aria-label="Project list">
+          <!-- project cards injected from portfolioData.projects -->
+        </div>
+      </section>
+
+      <!-- ─── Certifications (conditional — hidden when empty) ─── -->
+      <section id="certifications" class="reveal" aria-labelledby="certsHeading" hidden>
+        <p class="section-label" aria-hidden="true">04. Certifications</p>
+        <h2 id="certsHeading" class="section-title">/<span class="accent">certifications</span></h2>
+        <div class="certs-grid" id="certsGrid" aria-label="Certifications">
+          <!-- cert cards injected from portfolioData.certifications -->
+        </div>
+      </section>
+
+      <!-- ─── Interactive Terminal ─── -->
+      <section id="terminal" class="reveal" aria-labelledby="terminalHeading">
+        <p class="section-label" aria-hidden="true">05. Interactive</p>
+        <h2 id="terminalHeading" class="section-title">/<span class="accent">terminal</span></h2>
+        <p class="terminal-hint">
+          Try: <code>help</code> &middot; <code>whoami</code> &middot; <code>skills</code> &middot;
+          <code>projects</code> &middot; <code>about</code> &middot; <code>contact</code> &middot;
+          <code>neofetch</code> &middot; <code>clear</code>
+        </p>
+        <div class="terminal-widget" role="region" aria-label="Interactive terminal">
+          <div class="terminal-header" aria-hidden="true">
+            <span class="terminal-dot terminal-dot--red"></span>
+            <span class="terminal-dot terminal-dot--yellow"></span>
+            <span class="terminal-dot terminal-dot--green"></span>
+            <span class="terminal-title">guest@portfolio:~/.interactive</span>
+          </div>
+          <div class="terminal-body" id="terminalBody" aria-live="polite" aria-label="Terminal output">
+            <div class="output-line output-line--green">Welcome to the interactive terminal.</div>
+            <div class="output-line output-line--muted">Type <span class="output-line--green">help</span> to see available commands.</div>
+            <div class="output-line output-line--dim">──────────────────────────────────</div>
+            <div class="terminal-input-row" id="terminalInputRow">
+              <span class="terminal-prompt" aria-hidden="true">❯</span>
+              <label for="terminalInput" class="sr-only">Terminal command input</label>
+              <input
+                type="text"
+                id="terminalInput"
+                class="terminal-input"
+                placeholder="type a command..."
+                autocomplete="off"
+                spellcheck="false"
+                aria-label="Enter a terminal command"
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─── Contact ─── -->
+      <section id="contact" class="reveal contact-section" aria-labelledby="contactHeading">
+        <p class="section-label" aria-hidden="true">06. Contact</p>
+        <h2 id="contactHeading" class="section-title">/<span class="accent">get_in_touch</span></h2>
+        <p class="contact-intro">
+          I'm actively looking for entry-level DevOps and Cloud Engineering roles.
+          Feel free to reach out to discuss a role, a project, or anything DevOps.
+        </p>
+        <div class="contact-links" id="contactLinks" aria-label="Contact and social links">
+          <!-- contact links injected from portfolioData.social -->
+        </div>
+      </section>
+
+    </div><!-- .content-wrapper -->
+  </main>
+
+  <!-- ─── Footer ─── -->
+  <footer>
+    <div class="content-wrapper">
+      <p class="footer-text">
+        &copy; <span id="footerYear"></span>
+        <span class="footer-name">Jenish Chhowala</span>
+        &middot; Built with <span class="footer-heart" aria-label="love" aria-hidden="true">&#10084;&#65039;</span> &amp; caffeine
+        &middot; <span class="footer-path" aria-hidden="true">~/portfolio</span>
+      </p>
+    </div>
+  </footer>
+
+  <!-- Data and scripts — loaded in order -->
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+
+</body>
+</html>

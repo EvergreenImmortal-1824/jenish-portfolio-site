@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>~/portfolio — DevOps Engineer</title>
+
+    <style>
+        :root {
+            --bg-deep: #08080e;
+            --bg-primary: #0c0c16;
+            --bg-card: #111122;
+            --bg-card-hover: #151530;
+            --bg-terminal: #06060f;
+            --text-primary: #e4e4ec;
+            --text-secondary: #b0b0c0;
+            --text-muted: #6a6a80;
+            --accent-green: #00e676;
+            --accent-cyan: #00e5ff;
+            --accent-amber: #ffab40;
+            --accent-red: #ff5252;
+            --accent-purple: #b388ff;
+            --border-subtle: #1e1e35;
+            --border-glow: #00e67633;
+            --font-mono: 'JetBrains Mono', 'Cascadia Code', 'Fira Code', 'Source Code Pro', 'Courier New', monospace;
+            --font-sans: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            --glow-green: 0 0 20px rgba(0, 230, 118, 0.3), 0 0 60px rgba(0, 230, 118, 0.1);
+            --glow-cyan: 0 0 20px rgba(0, 229, 255, 0.3), 0 0 60px rgba(0, 229, 255, 0.1);
+            --scanline-opacity: 0.03;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            line-height: 1.7;
+            overflow-x: hidden;
+            position: relative;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Subtle scanline overlay */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            background: repeating-linear-gradient(0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0, 0, 0, var(--scanline-opacity)) 2px,
+                    rgba(0, 0, 0, var(--scanline-opacity)) 4px);
+        }
+
+        /* Animated dot grid background */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.25;
+            background-image: radial-gradient(circle, rgba(0, 230, 118, 0.15) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: gridShift 20s linear infinite;
+        }
+        @keyframes gridShift {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 40px 40px;
+            }
+        }
+
+        /* Floating particles canvas */
+        #particlesCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.6;
+        }
+
+        /* Main content wrapper */
+        .content-wrapper {
+            position: relative;
+            z-index: 2;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ── Navigation ── */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(12, 12, 22, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 14px 0;
+            transition: all 0.3s ease;
+        }
+        nav .nav-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+        .nav-logo {
+            font-family: var(--font-mono);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent-green);
+            text-decoration: none;
+            white-space: nowrap;
+            letter-spacing: -0.5px;
+        }
+        .nav-logo .prompt-char {
+            color: var(--accent-cyan);
+        }
+        .nav-links {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+            list-style: none;
+        }
+        .nav-links a {
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 6px 13px;
+            border-radius: 6px;
+            transition: all 0.25s ease;
+            letter-spacing: 0.3px;
+            white-space: nowrap;
+            border: 1px solid transparent;
+        }
+        .nav-links a:hover {
+            color: var(--accent-green);
+            background: rgba(0, 230, 118, 0.06);
+            border-color: var(--border-glow);
+            box-shadow: var(--glow-green);
+        }
+        .nav-links a.nav-cta {
+            background: rgba(0, 230, 118, 0.1);
+            border-color: rgba(0, 230, 118, 0.35);
+            color: var(--accent-green);
+        }
+        .nav-links a.nav-cta:hover {
+            background: rgba(0, 230, 118, 0.2);
+            box-shadow: var(--glow-green);
+        }
+
+        /* Mobile nav toggle */
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: 1px solid var(--border-subtle);
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-family: var(--font-mono);
+            transition: all 0.2s;
+        }
+        .nav-toggle:hover {
+            border-color: var(--accent-green);
+            color: var(--accent-green);
+        }
+
+        /* ── Section Styling ── */
+        section {
+            padding: 80px 0;
+            position: relative;
+        }
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: var(--accent-green);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .section-label::before {
+            content: '❯';
+            color: var(--accent-cyan);
+            font-size: 0.7rem;
+            animation: blinkPrompt 1.4s steps(1) infinite;
+        }
+        @keyframes blinkPrompt {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.15;
+            }
+        }
+        .section-title {
+            font-family: var(--font-mono);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+        .section-title .accent {
+            color: var(--accent-green);
+        }
+
+        /* ── Hero ── */
+        .hero {
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            padding-top: 40px;
+            padding-bottom: 60px;
+        }
+        .hero-content {
+            max-width: 750px;
+        }
+        .hero-greeting {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--accent-cyan);
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+        .hero-name {
+            font-family: var(--font-mono);
+            font-size: clamp(2.4rem, 5.5vw, 3.8rem);
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: -2px;
+            line-height: 1.1;
+            margin-bottom: 8px;
+            text-shadow: var(--glow-green);
+        }
+        .hero-name .dot {
+            color: var(--accent-green);
+        }
+        .hero-title-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+            min-height: 42px;
+        }
+        .hero-static-text {
+            font-family: var(--font-mono);
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+        }
+        #typing-text {
+            font-family: var(--font-mono);
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--accent-green);
+            border-right: 3px solid var(--accent-green);
+            padding-right: 4px;
+            animation: cursorBlink 0.8s steps(1) infinite;
+            white-space: nowrap;
+        }
+        @keyframes cursorBlink {
+            0%,
+            100% {
+                border-color: var(--accent-green);
+            }
+            50% {
+                border-color: transparent;
+            }
+        }
+        .hero-subtitle {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            max-width: 550px;
+            margin-bottom: 28px;
+            line-height: 1.6;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.4px;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            border: 1.5px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary {
+            background: var(--accent-green);
+            color: #000;
+            border-color: var(--accent-green);
+            box-shadow: 0 0 30px rgba(0, 230, 118, 0.25);
+        }
+        .btn-primary:hover {
+            box-shadow: 0 0 50px rgba(0, 230, 118, 0.45);
+            transform: translateY(-2px);
+        }
+        .btn-outline {
+            background: transparent;
+            color: var(--accent-cyan);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.1);
+        }
+        .btn-outline:hover {
+            background: rgba(0, 229, 255, 0.08);
+            box-shadow: 0 0 35px rgba(0, 229, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 0.75rem;
+        }
+
+        /* ── About ── */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+        .about-text p {
+            color: var(--text-secondary);
+            margin-bottom: 14px;
+            font-size: 0.95rem;
+        }
+        .about-text .highlight {
+            color: var(--accent-green);
+            font-weight: 600;
+        }
+        .about-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 22px 18px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .stat-card:hover {
+            border-color: var(--border-glow);
+            box-shadow: var(--glow-green);
+            background: var(--bg-card-hover);
+            transform: translateY(-3px);
+        }
+        .stat-card .stat-number {
+            font-family: var(--font-mono);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-green);
+            display: block;
+        }
+        .stat-card .stat-label {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-top: 4px;
+        }
+        .stat-card .stat-icon {
+            font-size: 1.6rem;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        /* ── Skills ── */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .skill-category {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 14px;
+            padding: 24px 20px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .skill-category:hover {
+            border-color: var(--border-glow);
+            box-shadow: 0 0 25px rgba(0, 230, 118, 0.08);
+            background: var(--bg-card-hover);
+        }
+        .skill-category-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        .skill-category-icon {
+            font-size: 1.5rem;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 230, 118, 0.08);
+            border-radius: 10px;
+            flex-shrink: 0;
+        }
+        .skill-category h3 {
+            font-family: var(--font-mono);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            letter-spacing: -0.3px;
+        }
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .skill-tag {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            padding: 5px 11px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+            transition: all 0.25s;
+            letter-spacing: 0.2px;
+            white-space: nowrap;
+        }
+        .skill-tag:hover {
+            border-color: var(--accent-green);
+            color: var(--accent-green);
+            background: rgba(0, 230, 118, 0.06);
+            box-shadow: 0 0 12px rgba(0, 230, 118, 0.15);
+        }
+        .skill-tag.featured {
+            border-color: rgba(0, 230, 118, 0.4);
+            color: var(--accent-green);
+            background: rgba(0, 230, 118, 0.07);
+            font-weight: 600;
+        }
+
+        /* ── Projects / Experience ── */
+        .projects-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .project-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 14px;
+            padding: 26px 24px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--accent-green);
+            border-radius: 4px 0 0 4px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .project-card:hover::before {
+            opacity: 1;
+        }
+        .project-card:hover {
+            border-color: var(--border-glow);
+            box-shadow: 0 0 30px rgba(0, 230, 118, 0.07);
+            background: var(--bg-card-hover);
+            transform: translateX(4px);
+        }
+        .project-card .terminal-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .terminal-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .terminal-dot.red {
+            background: #ff5f57;
+        }
+        .terminal-dot.yellow {
+            background: #febc2e;
+        }
+        .terminal-dot.green {
+            background: #28c840;
+        }
+        .project-card .project-title {
+            font-family: var(--font-mono);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 6px;
+            letter-spacing: -0.4px;
+        }
+        .project-card .project-meta {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--accent-cyan);
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .project-card .project-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+            line-height: 1.55;
+        }
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .project-tag {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            padding: 4px 9px;
+            border-radius: 4px;
+            background: rgba(0, 229, 255, 0.06);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            color: var(--accent-cyan);
+            letter-spacing: 0.3px;
+        }
+
+        /* ── Certifications ── */
+        .certs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+        }
+        .cert-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+        .cert-card:hover {
+            border-color: var(--accent-amber);
+            box-shadow: 0 0 25px rgba(255, 171, 64, 0.15);
+            transform: translateY(-4px);
+        }
+        .cert-card .cert-icon {
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .cert-card .cert-name {
+            font-family: var(--font-mono);
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+        .cert-card .cert-issuer {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ── Interactive Terminal ── */
+        .terminal-widget {
+            background: var(--bg-terminal);
+            border: 1px solid var(--border-subtle);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .terminal-widget .terminal-header {
+            background: #1a1a2e;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        .terminal-widget .terminal-header .dot {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+        }
+        .terminal-widget .terminal-header .terminal-title {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-left: 8px;
+            letter-spacing: 1px;
+        }
+        .terminal-widget .terminal-body {
+            padding: 18px 20px;
+            min-height: 220px;
+            max-height: 400px;
+            overflow-y: auto;
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            line-height: 1.6;
+            color: var(--accent-green);
+            cursor: text;
+        }
+        .terminal-body .output-line {
+            color: #c0c0d0;
+            margin-bottom: 3px;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .terminal-body .output-line.green {
+            color: var(--accent-green);
+        }
+        .terminal-body .output-line.cyan {
+            color: var(--accent-cyan);
+        }
+        .terminal-body .output-line.amber {
+            color: var(--accent-amber);
+        }
+        .terminal-body .output-line.purple {
+            color: var(--accent-purple);
+        }
+        .terminal-body .output-line.error {
+            color: var(--accent-red);
+        }
+        .terminal-input-line {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 4px;
+        }
+        .terminal-prompt {
+            color: var(--accent-green);
+            font-weight: 700;
+            white-space: nowrap;
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+        }
+        #terminalInput {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--accent-green);
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            outline: none;
+            caret-color: var(--accent-green);
+            min-width: 60px;
+        }
+        #terminalInput::placeholder {
+            color: rgba(0, 230, 118, 0.3);
+        }
+
+        /* ── Contact / Footer ── */
+        .contact-section {
+            text-align: center;
+            padding-bottom: 40px;
+        }
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            flex-wrap: wrap;
+            margin: 24px 0;
+        }
+        .contact-link {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            border: 1px solid var(--border-subtle);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            letter-spacing: 0.3px;
+        }
+        .contact-link:hover {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+            box-shadow: var(--glow-cyan);
+            background: rgba(0, 229, 255, 0.04);
+        }
+        .footer-text {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-subtle);
+        }
+        .footer-text .heart {
+            color: var(--accent-red);
+        }
+
+        /* ── Scroll animations ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            .about-stats {
+                grid-template-columns: 1fr 1fr;
+            }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(12, 12, 22, 0.97);
+                backdrop-filter: blur(20px);
+                padding: 16px 24px;
+                border-bottom: 1px solid var(--border-subtle);
+                gap: 4px;
+                z-index: 99;
+            }
+            .nav-links.open {
+                display: flex;
+            }
+            .nav-links a {
+                padding: 10px 14px;
+                font-size: 0.85rem;
+                width: 100%;
+                text-align: center;
+            }
+            .nav-toggle {
+                display: block;
+            }
+            .hero {
+                min-height: 70vh;
+                padding-top: 20px;
+            }
+            .hero-name {
+                font-size: 2rem;
+            }
+            .section-title {
+                font-size: 1.5rem;
+            }
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+            .certs-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .terminal-widget .terminal-body {
+                min-height: 180px;
+                max-height: 300px;
+            }
+        }
+        @media (max-width: 480px) {
+            .hero-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .btn {
+                width: 100%;
+                justify-content: center;
+                text-align: center;
+            }
+            .certs-grid {
+                grid-template-columns: 1fr;
+            }
+            .about-stats {
+                grid-template-columns: 1fr;
+            }
+            .contact-links {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-deep);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-subtle);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3a3a55;
+        }
+
+        /* Terminal body scrollbar */
+        .terminal-body::-webkit-scrollbar {
+            width: 4px;
+        }
+        .terminal-body::-webkit-scrollbar-thumb {
+            background: #2a2a3f;
+            border-radius: 2px;
+        }
+    </style>
+
+    <!-- Preconnect for fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Background grid -->
+    <div class="bg-grid"></div>
+
+    <!-- Particle canvas -->
+    <canvas id="particlesCanvas"></canvas>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-inner">
+            <a href="#hero" class="nav-logo">
+                <span class="prompt-char">❯</span> ~/portfolio<span class="prompt-char">_</span>
+            </a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#about">about</a></li>
+                <li><a href="#skills">skills</a></li>
+                <li><a href="#projects">projects</a></li>
+                <li><a href="#certs">certs</a></li>
+                <li><a href="#terminal">terminal</a></li>
+                <li><a href="#contact" class="nav-cta">contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="content-wrapper">
+
+        <!-- Hero -->
+        <section class="hero reveal" id="hero">
+            <div class="hero-content">
+                <p class="hero-greeting">┌─[user@portfolio]─[~/]</p>
+                <h1 class="hero-name">Hi, I'm <span style="color:#fff;">Your Name</span><span class="dot">.</span></h1>
+                <div class="hero-title-wrapper">
+                    <span class="hero-static-text">I am a</span>
+                    <span id="typing-text"></span>
+                </div>
+                <p class="hero-subtitle">
+                    Passionate about automating infrastructure, orchestrating cloud-native systems, and building resilient CI/CD pipelines.
+                    I treat servers like cattle, not pets. 🐮
+                </p>
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn btn-primary">❯ ./contact_me.sh</a>
+                    <a href="resume.pdf" class="btn btn-outline" target="_blank" rel="noopener">📄 download_resume.pdf</a>
+                    <a href="https://github.com/yourusername" class="btn btn-outline btn-sm" target="_blank" rel="noopener">
+                        ⬡ GitHub
+                    </a>
+                    <a href="https://linkedin.com/in/yourusername" class="btn btn-outline btn-sm" target="_blank" rel="noopener">
+                        🔗 LinkedIn
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- About -->
+        <section class="reveal" id="about">
+            <p class="section-label">01. About</p>
+            <h2 class="section-title">/<span class="accent">whoami</span></h2>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>
+                        I'm a <span class="highlight">DevOps / Cloud Engineer</span> with <span class="highlight">5+ years</span> of experience
+                        designing, deploying, and maintaining scalable infrastructure across multi-cloud environments.
+                    </p>
+                    <p>
+                        My toolkit spans <span class="highlight">AWS, Azure, Kubernetes, Terraform, Docker, CI/CD pipelines</span>,
+                        and a deep love for <span class="highlight">Linux systems</span>. I believe in infrastructure as code,
+                        observability-driven development, and automating everything that can be automated.
+                    </p>
+                    <p>
+                        When I'm not wrangling containers or debugging YAML indentation, you'll find me contributing to
+                        open-source projects, tinkering with homelab setups, or exploring the latest in platform engineering.
+                    </p>
+                </div>
+                <div class="about-stats">
+                    <div class="stat-card">
+                        <span class="stat-icon">☁️</span>
+                        <span class="stat-number">5+</span>
+                        <span class="stat-label">Years Experience</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-icon">🐳</span>
+                        <span class="stat-number">200+</span>
+                        <span class="stat-label">Containers Orchestrated</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-icon">⚡</span>
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">CI/CD Pipelines</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-icon">🖥️</span>
+                        <span class="stat-number">3</span>
+                        <span class="stat-label">Cloud Platforms</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills -->
+        <section class="reveal" id="skills">
+            <p class="section-label">02. Skills</p>
+            <h2 class="section-title">/<span class="accent">tech_stack</span> --list</h2>
+            <div class="skills-grid">
+                <!-- Cloud -->
+                <div class="skill-category">
+                    <div class="skill-category-header">
+                        <span class="skill-category-icon">☁️</span>
+                        <h3>Cloud Platforms</h3>
+                    </div>
+                    <div class="skill-tags">
+                        <span class="skill-tag featured">AWS</span>
+                        <span class="skill-tag featured">Azure</span>
+                        <span class="skill-tag">GCP</span>
+                        <span class="skill-tag">DigitalOcean</span>
+                        <span class="skill-tag">Linode</span>
+                    </div>
+                </div>
+                <!-- IaC -->
+                <div class="skill-category">
+                    <div class="skill-category-header">
+                        <span class="skill-category-icon">🏗️</span>
+                        <h3>Infrastructure as Code</h3>
+                    </div>
+                    <div class="skill-tags">
+                        <span class="skill-tag featured">Terraform</span>
+                        <span class="skill-tag">CloudFormation</span>
+                        <span class="skill-tag featured">Ansible</span>
+                        <span class="skill-tag">Pulumi</span>
+                        <span class="skill-tag">Packer</span>
+                    </div>
+                </div>
+                <!-- Containers -->
+                <div class="skill-category">
+                    <div class="skill-category-header">
+                        <span class="skill-category-icon">🐳</span>
+                        <h3>Containers & Orchestration</h3>
+                    </div>
+                    <div class="skill-tags">
+                        <span class="skill-tag featured">Docker</span>
+                        <span class="skill-tag featured">Kubernetes</span>
+                        <span class="skill-tag">Helm</span>
+                        <span class="skill-tag">Docker Compose</span>
+                        <span class="skill-tag">containerd</span>
+                    </div>
+                </div>
+                <!-- CI/CD -->
+                <div class="skill-category">
+                    <div class="skill-category-header">
+                        <span class="skill-category-icon">🔄</span>
+                        <h3>CI/CD & GitOps</h3>
+                    </div>
+                    <div class="skill-tags">
+                        <span class="skill-tag featured">GitHub Actions</span>
+                        <span class="skill-tag">GitLab CI</span>
+                        <span class="skill-tag featured">Jenkins</span>
+                        <span class="skill-tag">ArgoCD</span>
+                        <span class="skill-tag">Flux</span>
+                    </div>
+                </div>
+                <!-- Monitoring -->
+                <div class="skill-category">
+                    <div class="skill-category-header">
+                        <span class="skill-category-icon">📊</span>
+                        <h3>Observability & Monitoring</h3>
+                    </div>
+                    <div class="skill-tags">
+                        <span class="skill-tag featured">Prometheus</span>
+                        <span class="skill-tag featured">Grafana</span>
+                        <span class="skill-tag">ELK Stack</span>
+                        <span class="skill-tag">Datadog</span>
+                        <span class="skill-tag">OpenTelemetry</span>
+                    </div>
+                </div>
+                <!-- Scripting & OS -->
+                <div class="skill-category">
+                    <div class="skill-category-header">
+                        <span class="skill-category-icon">💻</span>
+                        <h3>Scripting & Systems</h3>
+                    </div>
+                    <div class="skill-tags">
+                        <span class="skill-tag featured">Bash</span>
+                        <span class="skill-tag featured">Python</span>
+                        <span class="skill-tag">PowerShell</span>
+                        <span class="skill-tag featured">Linux (RHEL/Debian)</span>
+                        <span class="skill-tag">Git</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects -->
+        <section class="reveal" id="projects">
+            <p class="section-label">03. Projects</p>
+            <h2 class="section-title">/<span class="accent">projects</span> --recent</h2>
+            <div class="projects-list">
+                <div class="project-card">
+                    <div class="terminal-bar">
+                        <span class="terminal-dot red"></span>
+                        <span class="terminal-dot yellow"></span>
+                        <span class="terminal-dot green"></span>
+                    </div>
+                    <h3 class="project-title">☸️ Multi-Cloud K8s Infrastructure</h3>
+                    <p class="project-meta">Terraform · AWS EKS · Azure AKS · ArgoCD</p>
+                    <p class="project-desc">
+                        Designed and deployed a multi-cloud Kubernetes federation using Terraform modules, automated
+                        with GitHub Actions, and managed via ArgoCD for GitOps-driven deployments across AWS and Azure.
+                    </p>
+                    <div class="project-tags">
+                        <span class="project-tag">Terraform</span>
+                        <span class="project-tag">Kubernetes</span>
+                        <span class="project-tag">ArgoCD</span>
+                        <span class="project-tag">AWS</span>
+                        <span class="project-tag">Azure</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="terminal-bar">
+                        <span class="terminal-dot red"></span>
+                        <span class="terminal-dot yellow"></span>
+                        <span class="terminal-dot green"></span>
+                    </div>
+                    <h3 class="project-title">📈 Full-Stack Observability Pipeline</h3>
+                    <p class="project-meta">Prometheus · Grafana · Loki · OpenTelemetry</p>
+                    <p class="project-desc">
+                        Built a centralized observability stack handling metrics, logs, and traces for 50+ microservices.
+                        Reduced MTTR by 60% with intelligent alerting and custom Grafana dashboards.
+                    </p>
+                    <div class="project-tags">
+                        <span class="project-tag">Prometheus</span>
+                        <span class="project-tag">Grafana</span>
+                        <span class="project-tag">Loki</span>
+                        <span class="project-tag">OpenTelemetry</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="terminal-bar">
+                        <span class="terminal-dot red"></span>
+                        <span class="terminal-dot yellow"></span>
+                        <span class="terminal-dot green"></span>
+                    </div>
+                    <h3 class="project-title">🔒 Automated Security Compliance Framework</h3>
+                    <p class="project-meta">Ansible · CIS Benchmarks · Trivy · OPA</p>
+                    <p class="project-desc">
+                        Developed an automated compliance pipeline enforcing CIS benchmarks across 200+ Linux servers
+                        using Ansible playbooks, with drift detection and auto-remediation capabilities.
+                    </p>
+                    <div class="project-tags">
+                        <span class="project-tag">Ansible</span>
+                        <span class="project-tag">CIS</span>
+                        <span class="project-tag">Trivy</span>
+                        <span class="project-tag">OPA</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Certifications -->
+        <section class="reveal" id="certs">
+            <p class="section-label">04. Certifications</p>
+            <h2 class="section-title">/<span class="accent">certs</span> --verify</h2>
+            <div class="certs-grid">
+                <div class="cert-card">
+                    <span class="cert-icon">☁️</span>
+                    <h4 class="cert-name">AWS Solutions Architect</h4>
+                    <p class="cert-issuer">Amazon Web Services</p>
+                </div>
+                <div class="cert-card">
+                    <span class="cert-icon">🐳</span>
+                    <h4 class="cert-name">CKA</h4>
+                    <p class="cert-issuer">CNCF — Certified Kubernetes Administrator</p>
+                </div>
+                <div class="cert-card">
+                    <span class="cert-icon">🏗️</span>
+                    <h4 class="cert-name">HashiCorp Terraform Associate</h4>
+                    <p class="cert-issuer">HashiCorp</p>
+                </div>
+                <div class="cert-card">
+                    <span class="cert-icon">🛡️</span>
+                    <h4 class="cert-name">Azure Administrator</h4>
+                    <p class="cert-issuer">Microsoft — AZ-104</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Terminal -->
+        <section class="reveal" id="terminal">
+            <p class="section-label">05. Interactive</p>
+            <h2 class="section-title">/<span class="accent">terminal</span> --interactive</h2>
+            <p style="color:var(--text-muted);margin-bottom:20px;font-size:0.9rem;">
+                Try commands: <code style="color:var(--accent-green);">help</code> ·
+                <code style="color:var(--accent-green);">whoami</code> ·
+                <code style="color:var(--accent-green);">skills</code> ·
+                <code style="color:var(--accent-green);">projects</code> ·
+                <code style="color:var(--accent-green);">certs</code> ·
+                <code style="color:var(--accent-green);">contact</code> ·
+                <code style="color:var(--accent-green);">neofetch</code> ·
+                <code style="color:var(--accent-green);">clear</code>
+            </p>
+            <div class="terminal-widget">
+                <div class="terminal-header">
+                    <span class="dot" style="background:#ff5f57;"></span>
+                    <span class="dot" style="background:#febc2e;"></span>
+                    <span class="dot" style="background:#28c840;"></span>
+                    <span class="terminal-title">guest@portfolio:~/.interactive</span>
+                </div>
+                <div class="terminal-body" id="terminalBody">
+                    <div class="output-line green">╔══════════════════════════════════════════╗</div>
+                    <div class="output-line green">║   Welcome to my interactive terminal!   ║</div>
+                    <div class="output-line green">║   Type <span class="cyan">'help'</span> to see available commands ║</div>
+                    <div class="output-line green">╚══════════════════════════════════════════╝</div>
+                    <div class="output-line" style="margin-top:8px;">Guest session started. All systems nominal.</div>
+                    <div class="output-line">Kernel: Linux 6.8.0 | Uptime: 42d 7h 13m</div>
+                    <div class="output-line" style="margin-bottom:10px;">────────────────────────────────────────</div>
+                    <div class="terminal-input-line">
+                        <span class="terminal-prompt">❯</span>
+                        <input type="text" id="terminalInput" placeholder="type a command..." autofocus autocomplete="off" spellcheck="false">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section class="contact-section reveal" id="contact">
+            <p class="section-label">06. Contact</p>
+            <h2 class="section-title">/<span class="accent">get_in_touch</span></h2>
+            <p style="color:var(--text-secondary);max-width:500px;margin:0 auto 20px;">
+                I'm always open to discussing new opportunities, cloud architecture, or just geeking out over infrastructure.
+                Feel free to reach out!
+            </p>
+            <div class="contact-links">
+                <a href="mailto:your.email@example.com" class="contact-link">📧 your.email@example.com</a>
+                <a href="https://github.com/yourusername" class="contact-link" target="_blank" rel="noopener">⬡ github/yourusername</a>
+                <a href="https://linkedin.com/in/yourusername" class="contact-link" target="_blank" rel="noopener">🔗 linkedin/yourusername</a>
+                <a href="resume.pdf" class="contact-link" target="_blank" rel="noopener">📄 resume.pdf</a>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer style="text-align:center;padding-bottom:30px;">
+            <p class="footer-text">
+                © 2026 <span style="color:var(--accent-green);">yourusername</span> ·
+                Built with <span class="heart">❤️</span> &amp; caffeine ·
+                <span style="color:var(--accent-cyan);">~/portfolio</span> v2.4.1
+            </p>
+        </footer>
+
+    </div>
+
+    <script>
+        // ── Particle Canvas Background ──
+        (function() {
+            const canvas = document.getElementById('particlesCanvas');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            const maxParticles = 55;
+
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+
+            class Particle {
+                constructor() {
+                    this.reset();
+                }
+                reset() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 1.6 + 0.4;
+                    this.speedX = (Math.random() - 0.5) * 0.35;
+                    this.speedY = (Math.random() - 0.5) * 0.35;
+                    this.opacity = Math.random() * 0.5 + 0.15;
+                    this.fadeDirection = Math.random() > 0.5 ? 1 : -1;
+                    this.fadeSpeed = Math.random() * 0.004 + 0.002;
+                }
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    this.opacity += this.fadeDirection * this.fadeSpeed;
+                    if (this.opacity >= 0.6) this.fadeDirection = -1;
+                    if (this.opacity <= 0.1) this.fadeDirection = 1;
+                    if (this.x < -10 || this.x > canvas.width + 10 || this.y < -10 || this.y > canvas.height + 10) {
+                        this.reset();
+                    }
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(0,230,118,${this.opacity})`;
+                    ctx.fill();
+                    // Subtle glow
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size * 2.5, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(0,230,118,${this.opacity * 0.2})`;
+                    ctx.fill();
+                }
+            }
+
+            for (let i = 0; i < maxParticles; i++) {
+                particles.push(new Particle());
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                // Draw connection lines between nearby particles
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 110) {
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.strokeStyle = `rgba(0,229,255,${0.06 * (1 - dist / 110)})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.stroke();
+                        }
+                    }
+                }
+                particles.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+                requestAnimationFrame(animate);
+            }
+            animate();
+        })();
+
+        // ── Typing Effect ──
+        (function() {
+            const titles = [
+                'DevOps Engineer',
+                'Cloud Engineer',
+                'System Administrator',
+                'Platform Engineer',
+                'Infrastructure Architect',
+                'SRE Enthusiast',
+                'Automation Advocate',
+            ];
+            let titleIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            const typingEl = document.getElementById('typing-text');
+            const typeSpeed = 55;
+            const deleteSpeed = 30;
+            const pauseBetween = 1800;
+
+            function type() {
+                const current = titles[titleIndex];
+                if (!isDeleting) {
+                    typingEl.textContent = current.substring(0, charIndex + 1);
+                    charIndex++;
+                    if (charIndex === current.length) {
+                        isDeleting = true;
+                        setTimeout(type, pauseBetween);
+                        return;
+                    }
+                } else {
+                    typingEl.textContent = current.substring(0, charIndex - 1);
+                    charIndex--;
+                    if (charIndex === 0) {
+                        isDeleting = false;
+                        titleIndex = (titleIndex + 1) % titles.length;
+                        setTimeout(type, 350);
+                        return;
+                    }
+                }
+                setTimeout(type, isDeleting ? deleteSpeed : typeSpeed);
+            }
+            type();
+        })();
+
+        // ── Mobile Nav Toggle ──
+        (function() {
+            const toggle = document.getElementById('navToggle');
+            const links = document.getElementById('navLinks');
+            toggle.addEventListener('click', () => {
+                links.classList.toggle('open');
+            });
+            // Close nav on link click
+            links.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    links.classList.remove('open');
+                });
+            });
+            // Close nav on outside click
+            document.addEventListener('click', (e) => {
+                if (!toggle.contains(e.target) && !links.contains(e.target)) {
+                    links.classList.remove('open');
+                }
+            });
+        })();
+
+        // ── Scroll Reveal ──
+        (function() {
+            const reveals = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+            reveals.forEach(el => observer.observe(el));
+        })();
+
+        // ── Interactive Terminal ──
+        (function() {
+            const terminalBody = document.getElementById('terminalBody');
+            const terminalInput = document.getElementById('terminalInput');
+            const promptHTML = '<span class="terminal-prompt">❯</span>';
+
+            const commandOutputs = {
+                help: () => `
+                <div class="output-line cyan">Available commands:</div>
+                <div class="output-line">  <span class="green">whoami</span>      — About me</div>
+                <div class="output-line">  <span class="green">skills</span>      — Tech stack & skills</div>
+                <div class="output-line">  <span class="green">projects</span>    — Featured projects</div>
+                <div class="output-line">  <span class="green">certs</span>       — Certifications</div>
+                <div class="output-line">  <span class="green">contact</span>     — Contact information</div>
+                <div class="output-line">  <span class="green">neofetch</span>    — System info (fun)</div>
+                <div class="output-line">  <span class="green">ls</span>          — List sections</div>
+                <div class="output-line">  <span class="green">date</span>        — Current date/time</div>
+                <div class="output-line">  <span class="green">uptime</span>      — Fake system uptime</div>
+                <div class="output-line">  <span class="green">banner</span>      — ASCII art</div>
+                <div class="output-line">  <span class="green">clear</span>       — Clear terminal</div>
+                <div class="output-line">  <span class="green">exit</span>        — End session</div>
+              `,
+                whoami: () => `
+                <div class="output-line green">user@portfolio</div>
+                <div class="output-line">────────────────────</div>
+                <div class="output-line">Name: <span class="cyan">Your Name</span></div>
+                <div class="output-line">Role: <span class="cyan">DevOps / Cloud Engineer</span></div>
+                <div class="output-line">Exp:  <span class="amber">5+ years</span></div>
+                <div class="output-line">Loc:  <span class="purple">[Your Location]</span></div>
+                <div class="output-line">Focus: Cloud Infrastructure · K8s · CI/CD · Automation</div>
+              `,
+                skills: () => `
+                <div class="output-line cyan">Tech Stack:</div>
+                <div class="output-line">☁️  Cloud:    <span class="green">AWS, Azure, GCP</span></div>
+                <div class="output-line">🏗️  IaC:      <span class="green">Terraform, Ansible, CloudFormation</span></div>
+                <div class="output-line">🐳 Containers:<span class="green">Docker, Kubernetes, Helm</span></div>
+                <div class="output-line">🔄 CI/CD:    <span class="green">GitHub Actions, Jenkins, ArgoCD</span></div>
+                <div class="output-line">📊 Monitor:  <span class="green">Prometheus, Grafana, ELK</span></div>
+                <div class="output-line">💻 Scripting:<span class="green">Bash, Python, PowerShell</span></div>
+              `,
+                projects: () => `
+                <div class="output-line cyan">Featured Projects:</div>
+                <div class="output-line">1. <span class="amber">Multi-Cloud K8s Infra</span> — Terraform · EKS · AKS · ArgoCD</div>
+                <div class="output-line">2. <span class="amber">Observability Pipeline</span> — Prometheus · Grafana · Loki</div>
+                <div class="output-line">3. <span class="amber">Security Compliance</span> — Ansible · CIS · Trivy · OPA</div>
+                <div class="output-line" style="margin-top:4px;">Scroll to <span class="cyan">#projects</span> section for details.</div>
+              `,
+                certs: () => `
+                <div class="output-line cyan">Certifications:</div>
+                <div class="output-line">✅ AWS Solutions Architect</div>
+                <div class="output-line">✅ CKA — Certified Kubernetes Administrator</div>
+                <div class="output-line">✅ HashiCorp Terraform Associate</div>
+                <div class="output-line">✅ Azure Administrator (AZ-104)</div>
+              `,
+                contact: () => `
+                <div class="output-line cyan">Get in Touch:</div>
+                <div class="output-line">📧 Email:   <span class="green">your.email@example.com</span></div>
+                <div class="output-line">⬡ GitHub:  <span class="green">github.com/yourusername</span></div>
+                <div class="output-line">🔗 LinkedIn:<span class="green">linkedin.com/in/yourusername</span></div>
+                <div class="output-line">📄 Resume:  <span class="green">[resume.pdf available]</span></div>
+              `,
+                neofetch: () => `
+                <div class="output-line cyan">      ████████▄     </div>
+                <div class="output-line cyan">    ████████████   </div>
+                <div class="output-line cyan">  ██████████████  </div>
+                <div class="output-line cyan">  ██████████████  </div>
+                <div class="output-line cyan">    ████████████   </div>
+                <div class="output-line cyan">      ████████▄     </div>
+                <div class="output-line">────────────────────────────</div>
+                <div class="output-line"><span class="green">OS:</span> NixOS 24.11</div>
+                <div class="output-line"><span class="green">Host:</span> ThinkPad X1 Carbon Gen 11</div>
+                <div class="output-line"><span class="green">Kernel:</span> Linux 6.8.0</div>
+                <div class="output-line"><span class="green">Shell:</span> zsh 5.9</div>
+                <div class="output-line"><span class="green">Uptime:</span> 42 days, 7 hours</div>
+                <div class="output-line"><span class="green">Packages:</span> 1847 (nix)</div>
+                <div class="output-line"><span class="green">CPU:</span> Intel i7-1370P (16) @ 5.0GHz</div>
+                <div class="output-line"><span class="green">Memory:</span> 32GB LPDDR5</div>
+              `,
+                ls: () => `
+                <div class="output-line cyan">Sections:</div>
+                <div class="output-line">  about/    skills/    projects/    certs/    contact/</div>
+                <div class="output-line" style="margin-top:4px;">Use <span class="green">cd &lt;section&gt;</span> metaphor — scroll on the page!</div>
+              `,
+                date: () => `
+                <div class="output-line green">${new Date().toString()}</div>
+              `,
+                uptime: () => `
+                <div class="output-line">System uptime: <span class="amber">42 days, 7 hours, 13 minutes</span></div>
+                <div class="output-line">Load average: 0.08, 0.14, 0.09</div>
+                <div class="output-line">Users logged in: <span class="green">1</span> (that's you!)</div>
+              `,
+                banner: () => `
+                <div class="output-line cyan">  ██╗   ██╗ ██████╗ ██╗   ██╗██████╗ </div>
+                <div class="output-line cyan">  ╚██╗ ██╔╝██╔═══██╗██║   ██║██╔══██╗</div>
+                <div class="output-line cyan">   ╚████╔╝ ██║   ██║██║   ██║██████╔╝</div>
+                <div class="output-line cyan">    ╚██╔╝  ██║   ██║██║   ██║██╔══██╗</div>
+                <div class="output-line cyan">     ██║   ╚██████╔╝╚██████╔╝██║  ██║</div>
+                <div class="output-line cyan">     ╚═╝    ╚═════╝  ╚═════╝ ╚═╝  ╚═╝</div>
+                <div class="output-line green">        DevOps · Cloud · Automation</div>
+              `,
+                exit: () => 'EXIT_SESSION',
+                logout: () => 'EXIT_SESSION',
+                sudo: () =>
+                `<div class="output-line error">Permission denied. Nice try though. 😉</div>`,
+                rm: () =>
+                `<div class="output-line error">rm: refusing to remove — this is a safe space.</div>`,
+                hack: () =>
+                `<div class="output-line amber">Initiating hack protocol... just kidding! Try 'help' instead.</div>`,
+            };
+
+            function appendOutput(html) {
+                // Remove existing input line
+                const existingInput = terminalBody.querySelector('.terminal-input-line');
+                if (existingInput) existingInput.remove();
+
+                // Append output
+                const outputDiv = document.createElement('div');
+                outputDiv.innerHTML = html;
+                terminalBody.appendChild(outputDiv);
+
+                // Re-append input line
+                const inputLine = document.createElement('div');
+                inputLine.className = 'terminal-input-line';
+                inputLine.innerHTML =
+                    `${promptHTML}<input type="text" id="terminalInput" placeholder="type a command..." autocomplete="off" spellcheck="false">`;
+                terminalBody.appendChild(inputLine);
+
+                // Re-bind the new input
+                const newInput = document.getElementById('terminalInput');
+                newInput.focus();
+                newInput.addEventListener('keydown', handleInput);
+
+                // Scroll to bottom
+                terminalBody.scrollTop = terminalBody.scrollHeight;
+            }
+
+            function handleInput(e) {
+                if (e.key === 'Enter') {
+                    const input = e.target;
+                    const cmd = input.value.trim().toLowerCase();
+                    // Show the command that was typed
+                    const cmdEcho = document.createElement('div');
+                    cmdEcho.className = 'output-line';
+                    cmdEcho.innerHTML = `<span class="terminal-prompt">❯</span> <span style="color:#c0c0d0;">${cmd || ''}</span>`;
+                    // Remove input line, add echo, then process
+                    const existingInput = terminalBody.querySelector('.terminal-input-line');
+                    if (existingInput) existingInput.remove();
+                    terminalBody.appendChild(cmdEcho);
+
+                    if (cmd === 'clear') {
+                        terminalBody.innerHTML = '';
+                        appendOutput(
+                            '<div class="output-line green">Terminal cleared. Type <span class="cyan">help</span> for commands.</div>');
+                    } else if (cmd === 'exit' || cmd === 'logout') {
+                        appendOutput(
+                            '<div class="output-line amber">Session ended. Refresh the page or type a command to restart.</div><div class="output-line">────────────────────────────────────────</div>'
+                            );
+                    } else if (commandOutputs[cmd]) {
+                        const result = commandOutputs[cmd]();
+                        if (result === 'EXIT_SESSION') {
+                            appendOutput(
+                                '<div class="output-line amber">Session ended. Refresh or keep typing.</div>');
+                        } else {
+                            appendOutput(result);
+                        }
+                    } else if (cmd === '') {
+                        appendOutput('');
+                    } else {
+                        appendOutput(
+                            `<div class="output-line error">zsh: command not found: ${cmd}</div><div class="output-line">Type <span class="green">help</span> for available commands.</div>`
+                            );
+                    }
+                }
+            }
+
+            // Bind initial input
+            terminalInput.addEventListener('keydown', handleInput);
+
+            // Focus input when clicking terminal body
+            terminalBody.addEventListener('click', () => {
+                const inp = document.getElementById('terminalInput');
+                if (inp) inp.focus();
+            });
+        })();
+    </script>
+</body>
+</html>

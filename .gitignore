@@ -1,0 +1,23 @@
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor directories
+.vscode/
+.idea/
+*.sublime-workspace
+
+# Logs
+*.log
+
+# Environment files
+.env
+
+# Temporary files
+*.tmp
+*.swp
+*.bak
+
+# Do NOT ignore portfolio assets
+# assets/ is intentionally tracked
