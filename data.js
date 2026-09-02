@@ -65,7 +65,7 @@ const portfolioData = {
   social: {
     github:   "https://github.com/EvergreenImmortal-1824",
     linkedin: "https://www.linkedin.com/in/jenish-chhowala",
-    email:    "jenishchhowala@example.com",
+    email:    "jenish8964@gmail.com",
     resume:   "assets/resume.pdf"
   },
 
