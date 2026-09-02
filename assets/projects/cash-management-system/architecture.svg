@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 600" width="100%" height="100%">
+  <defs>
+    <linearGradient id="cmsBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0c0c1a"/>
+      <stop offset="100%" stop-color="#060610"/>
+    </linearGradient>
+    <marker id="cmsArr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#00e5ff"/>
+    </marker>
+  </defs>
+
+  <rect width="940" height="600" rx="12" fill="url(#cmsBg)" stroke="#1e1e38" stroke-width="1.5"/>
+
+  <!-- Title -->
+  <text x="40" y="40" fill="#00e676" font-family="'JetBrains Mono', monospace" font-size="16" font-weight="700">Cash Management System (CMS) Microservices Engine</text>
+  <text x="40" y="62" fill="#8888a4" font-family="'Inter', sans-serif" font-size="12">Enterprise Financial Microservices, Health Aggregator · Automated via Jenkins CI &amp; Terraform IaC</text>
+
+  <!-- Automation Bar -->
+  <rect x="40" y="78" width="860" height="38" rx="6" fill="#121226" stroke="#2a2a4a" stroke-width="1"/>
+  <text x="55" y="102" fill="#ffab40" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="600">⚡ Automation Engine:</text>
+  <text x="210" y="102" fill="#b388ff" font-family="'JetBrains Mono', monospace" font-size="11">Jenkins CI Pipeline (Orchestrator Validation, Multi-Stage Build)</text>
+  <text x="660" y="102" fill="#00e5ff" font-family="'JetBrains Mono', monospace" font-size="11">· Terraform IaC</text>
+
+  <!-- Client Browser -->
+  <rect x="320" y="130" width="300" height="42" rx="8" fill="#14142b" stroke="#00e5ff" stroke-width="1.2"/>
+  <text x="470" y="156" fill="#fff" font-family="'JetBrains Mono', monospace" font-size="12" text-anchor="middle">🌐 Dashboard UI &amp; External Clients</text>
+
+  <line x1="470" y1="172" x2="470" y2="205" stroke="#00e5ff" stroke-width="2" marker-end="url(#cmsArr)"/>
+  <text x="485" y="194" fill="#00e5ff" font-family="'JetBrains Mono', monospace" font-size="10">Port 5000</text>
+
+  <!-- API Gateway & Health Aggregator -->
+  <rect x="180" y="205" width="580" height="60" rx="8" fill="#141432" stroke="#00e676" stroke-width="1.2"/>
+  <text x="470" y="230" fill="#00e676" font-family="'JetBrains Mono', monospace" font-size="13" text-anchor="middle" font-weight="700">API Gateway &amp; Dashboard UI (:5000)</text>
+  <text x="470" y="252" fill="#8888a4" font-family="'Inter', sans-serif" font-size="10" text-anchor="middle">Aggregated Health Monitor: curl /health · Dynamic Route Proxy · start-services.js Orchestrator</text>
+
+  <!-- Microservices Grid Container -->
+  <rect x="40" y="285" width="860" height="235" rx="10" fill="#090918" stroke="#2a2a4a" stroke-width="1.2"/>
+  <text x="60" y="310" fill="#00e5ff" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="600">Financial Microservices Cluster (Independent Service Ports)</text>
+
+  <!-- Row 1: Auth & Accounts -->
+  <rect x="65" y="325" width="380" height="55" rx="6" fill="#121228" stroke="#00e5ff" stroke-width="1"/>
+  <text x="80" y="350" fill="#00e5ff" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="600">🔐 Auth Service (:5001)</text>
+  <text x="80" y="368" fill="#8888a4" font-family="'Inter', sans-serif" font-size="10">Route: /api/v1/auth · Identity &amp; Session Management</text>
+
+  <rect x="495" y="325" width="380" height="55" rx="6" fill="#121228" stroke="#00e676" stroke-width="1"/>
+  <text x="510" y="350" fill="#00e676" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="600">💼 Account Service (:5002)</text>
+  <text x="510" y="368" fill="#8888a4" font-family="'Inter', sans-serif" font-size="10">Route: /api/v1/accounts · Account Master &amp; Balances</text>
+
+  <!-- Row 2: Transactions & Analytics -->
+  <rect x="65" y="390" width="380" height="55" rx="6" fill="#121228" stroke="#ffab40" stroke-width="1"/>
+  <text x="80" y="415" fill="#ffab40" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="600">⚡ Transaction Engine (:5003)</text>
+  <text x="80" y="433" fill="#8888a4" font-family="'Inter', sans-serif" font-size="10">Route: /api/v1/transactions · High-Throughput Ledger</text>
+
+  <rect x="495" y="390" width="380" height="55" rx="6" fill="#121228" stroke="#b388ff" stroke-width="1"/>
+  <text x="510" y="415" fill="#b388ff" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="600">📊 Analytics Service (:5004)</text>
+  <text x="510" y="433" fill="#8888a4" font-family="'Inter', sans-serif" font-size="10">Route: /api/v1/analytics · Real-Time Cash Flow Metrics</text>
+
+  <!-- Row 3: Reconciliation -->
+  <rect x="280" y="455" width="380" height="50" rx="6" fill="#121228" stroke="#00e5ff" stroke-width="1"/>
+  <text x="295" y="478" fill="#00e5ff" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="600">🔄 Reconciliation Service (:5005)</text>
+  <text x="295" y="495" fill="#8888a4" font-family="'Inter', sans-serif" font-size="10">Route: /api/v1/reconciliation · Balance Audit &amp; Settlement Verification</text>
+
+  <!-- Footer Banner -->
+  <rect x="40" y="535" width="860" height="42" rx="6" fill="#101024" stroke="#1e1e38" stroke-width="1"/>
+  <text x="470" y="561" fill="#00e676" font-family="'JetBrains Mono', monospace" font-size="11" text-anchor="middle">Single-Command Orchestration (docker compose up -d) · Aggregated Health Probes · Microservice Resilience</text>
+</svg>

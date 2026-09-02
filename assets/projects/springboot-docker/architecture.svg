@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 580" width="100%" height="100%">
+  <defs>
+    <linearGradient id="sbBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0c0c1a"/>
+      <stop offset="100%" stop-color="#060610"/>
+    </linearGradient>
+    <marker id="sbCyan" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#00e5ff"/>
+    </marker>
+    <marker id="sbGreen" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#00e676"/>
+    </marker>
+    <marker id="sbBlue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#326ce5"/>
+    </marker>
+  </defs>
+
+  <rect width="940" height="580" rx="12" fill="url(#sbBg)" stroke="#1e1e38" stroke-width="1.5"/>
+
+  <text x="40" y="40" fill="#00e676" font-family="'JetBrains Mono', monospace" font-size="16" font-weight="700">Full Stack Spring Boot REST API Architecture</text>
+  <text x="40" y="62" fill="#8888a4" font-family="'Inter', sans-serif" font-size="12">Spring Boot 3.2 (Java 21), React 18 SPA, PostgreSQL 16 · Automated via Jenkins CI &amp; Terraform IaC</text>
+
+  <!-- CI/CD & Terraform Strip -->
+  <rect x="40" y="80" width="860" height="38" rx="6" fill="#121226" stroke="#2a2a4a" stroke-width="1"/>
+  <text x="55" y="104" fill="#ffab40" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="600">⚡ Automation Engine:</text>
+  <text x="210" y="104" fill="#b388ff" font-family="'JetBrains Mono', monospace" font-size="11">Jenkins CI Pipeline (Build, Test, Scan, Docker Push)</text>
+  <text x="630" y="104" fill="#00e5ff" font-family="'JetBrains Mono', monospace" font-size="11">· Terraform IaC (Infrastructure Provisioning)</text>
+
+  <!-- Client Browser -->
+  <rect x="310" y="135" width="320" height="42" rx="8" fill="#14142b" stroke="#00e5ff" stroke-width="1.2"/>
+  <text x="470" y="161" fill="#fff" font-family="'JetBrains Mono', monospace" font-size="12" text-anchor="middle">🌐 Client / Browser User</text>
+
+  <line x1="470" y1="177" x2="470" y2="210" stroke="#00e5ff" stroke-width="2" marker-end="url(#sbCyan)"/>
+  <text x="485" y="198" fill="#00e5ff" font-family="'JetBrains Mono', monospace" font-size="10">HTTP / Port 3000</text>
+
+  <!-- Docker Container Environment -->
+  <rect x="40" y="210" width="860" height="340" rx="10" fill="#080816" stroke="#2496ed" stroke-dasharray="4,4" stroke-width="1.5"/>
+  <text x="60" y="235" fill="#2496ed" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="600">🐳 Docker &amp; Docker Compose Multi-Container Orchestration</text>
+
+  <!-- Frontend Container -->
+  <rect x="70" y="250" width="800" height="65" rx="8" fill="#121228" stroke="#00e676" stroke-width="1"/>
+  <text x="90" y="275" fill="#00e676" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="600">React 18 SPA (Vite + Nginx Web Server)</text>
+  <text x="90" y="295" fill="#8888a4" font-family="'Inter', sans-serif" font-size="11">Port: 3000:80 · Live Health Monitor, Glassmorphism UI, Task CRUD Dashboard</text>
+
+  <!-- Flow to Spring Boot -->
+  <line x1="470" y1="315" x2="470" y2="350" stroke="#00e676" stroke-width="2" marker-end="url(#sbGreen)"/>
+  <text x="485" y="337" fill="#00e676" font-family="'JetBrains Mono', monospace" font-size="10">REST API / CORS (Port 8080)</text>
+
+  <!-- Backend Container -->
+  <rect x="70" y="350" width="800" height="85" rx="8" fill="#121228" stroke="#00e5ff" stroke-width="1"/>
+  <text x="90" y="375" fill="#00e5ff" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="600">Spring Boot 3.2 REST API (Java 21 LTS)</text>
+  <text x="90" y="397" fill="#8888a4" font-family="'Inter', sans-serif" font-size="11">Port: 8080 · WebMvcConfigurer CORS Filter · Spring Data JPA &amp; Hibernate</text>
+  <text x="90" y="417" fill="#ffab40" font-family="'JetBrains Mono', monospace" font-size="11">Interactive Swagger UI / OpenAPI 3 (/swagger-ui.html) · Actuator Health Probes (/api/v1/health)</text>
+
+  <!-- Flow to Postgres -->
+  <line x1="470" y1="435" x2="470" y2="470" stroke="#326ce5" stroke-width="2" marker-end="url(#sbBlue)"/>
+  <text x="485" y="457" fill="#326ce5" font-family="'JetBrains Mono', monospace" font-size="10">JDBC Connection / Port 5432</text>
+
+  <!-- Database Container -->
+  <rect x="70" y="470" width="800" height="60" rx="8" fill="#121228" stroke="#326ce5" stroke-width="1"/>
+  <text x="90" y="495" fill="#82b1ff" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="600">PostgreSQL 16 Relational Store (Port 5432)</text>
+  <text x="90" y="515" fill="#8888a4" font-family="'Inter', sans-serif" font-size="11">Persistent Docker Volume: pgdata:/var/lib/postgresql/data · Automated Healthcheck Ping</text>
+</svg>

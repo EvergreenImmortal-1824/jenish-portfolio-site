@@ -50,7 +50,12 @@ const portfolioData = {
       { icon: "docker",  label: "Containerization",     detail: "Docker & Kubernetes"            },
       { icon: "cicd",    label: "CI/CD & Automation",   detail: "Jenkins, SonarQube & Trivy"     },
       { icon: "linux",   label: "Linux Systems",        detail: "Linux, Bash & Networking"       }
-    ]
+    ],
+    latestCommit: {
+      hash: "c8f4a12",
+      message: "feat: Jenkins CI & Argo CD GitOps pipeline",
+      branch: "main"
+    }
   },
 
   // ==========================================================
@@ -58,9 +63,9 @@ const portfolioData = {
   // REPLACE the placeholder values below with your real details.
   // ==========================================================
   social: {
-    github:   "https://github.com/YOUR_USERNAME",           // REPLACE
-    linkedin: "https://www.linkedin.com/in/YOUR_HANDLE/",  // REPLACE
-    email:    "your.email@example.com",                     // REPLACE
+    github:   "https://github.com/EvergreenImmortal-1824",
+    linkedin: "https://www.linkedin.com/in/jenish-chhowala",
+    email:    "jenishchhowala@example.com",
     resume:   "assets/resume.pdf"
   },
 
@@ -143,7 +148,8 @@ const portfolioData = {
         { name: "Linux",          featured: true  },
         { name: "Bash",           featured: true  },
         { name: "Shell Scripting"                 },
-        { name: "Networking"                      }
+        { name: "Networking"                      },
+        { name: "Nginx"                           }
       ]
     }
   ],
@@ -164,174 +170,224 @@ const portfolioData = {
   projects: [
 
     {
-      id: "aws-3tier",
-      title: "AWS 3-Tier Application Architecture",
+      id: "cloudscale-3tier-engine",
+      title: "CloudScale-3Tier-Engine: High-Availability Cloud Architecture & Automated CI/CD Engine",
       status: "completed",
       featured: true,
-      category: ["aws", "cloud", "networking"],
+      category: ["aws", "cloud", "networking", "ci-cd", "devops", "security"],
       shortDescription:
-        "Designed and deployed a 3-tier application architecture on AWS " +
-        "using a custom VPC with network isolation across web, application, " +
-        "and database tiers.",
+        "Production-grade, highly available 3-Tier web application architecture deployed on AWS and managed via an automated Jenkins CI/CD pipeline with dual ALBs, multi-AZ RDS MySQL redundancy, and shift-left security enforcement.",
       description:
-        "Built a hands-on 3-tier AWS architecture using a custom VPC with " +
-        "six subnets distributed across availability zones. The architecture " +
-        "separates public (web), private (application), and data (database) " +
-        "tiers. Routing, security groups, an Application Load Balancer, EC2 " +
-        "instances, and Amazon RDS are configured to create an isolated, " +
-        "layered application environment.",
+        "Engineered an enterprise-grade 3-Tier architecture across two Availability Zones (us-east-1a, us-east-1b) with six isolated subnets. The presentation tier runs Nginx web instances in private application subnets behind a Public Application Load Balancer, reverse proxying /api/ queries through an Internal ALB to isolated Node.js REST API microservices. The data tier utilizes an Amazon Multi-AZ RDS MySQL cluster with synchronous standby failover and connection pooling. The entire software lifecycle is orchestrated via a Declarative Jenkins CI/CD pipeline featuring SonarQube static code quality gates, Trivy CVE vulnerability scans, Sonatype Nexus artifact storage, and remote private SSH deployments.",
       technologies: [
-        "AWS", "VPC", "EC2", "RDS", "Application Load Balancer",
-        "IAM", "AMI", "Security Groups", "Subnets", "Route Tables",
-        "Internet Gateway", "NAT Gateway", "Network ACLs"
+        "AWS", "VPC", "EC2", "ALB", "Auto Scaling", "RDS MySQL", "Nginx",
+        "Node.js", "React 18", "Jenkins", "SonarQube", "Trivy", "Nexus",
+        "Route 53", "WAF", "NAT Gateway", "Security Groups"
       ],
       highlights: [
-        "Custom VPC with six subnets across availability zones",
-        "Public, private, and database tier isolation",
-        "Application Load Balancer routing traffic to EC2 tier",
-        "Amazon RDS deployed in isolated data subnets",
-        "NAT Gateway providing outbound internet for private subnets",
-        "Security Groups and Network ACLs enforcing least-privilege access"
+        "Multi-AZ High Availability across us-east-1a & us-east-1b with 6 isolated subnets and explicit route tables",
+        "Dual Application Load Balancers: Public ALB for internet ingress & Internal ALB for isolated backend routing",
+        "Auto Scaling Groups (ASG) for stateless Nginx web tier and Node.js REST API tier",
+        "Amazon Multi-AZ RDS MySQL with synchronous standby replica and mysql2 connection pooling failover",
+        "Strict least-privilege Security Group matrix restricting inter-tier traffic by Security Group ID and exact ports",
+        "Declarative Jenkins CI/CD pipeline: Git checkout, SonarQube quality gate, Trivy CVE audit, Nexus archiving",
+        "Zero-downtime remote private SSH deployment script terminating stale processes and verifying /health endpoints",
+        "CloudWatch operational dashboards, ALB 5xx threshold alarms, and AWS Budgets FinOps governance"
       ],
-      github: null,              // REPLACE: "https://github.com/YOUR_USERNAME/aws-3tier"
+      github: "https://github.com/EvergreenImmortal-1824",
       demo: null,
-      architectureDiagram: null, // REPLACE: "assets/projects/aws-3tier/architecture.svg"
-      screenshots: [],
-      pipeline: null,
-      deployment: null,
-      notes: null
-    },
-
-    {
-      id: "jenkins-cicd",
-      title: "Jenkins CI/CD Pipeline",
-      status: "completed",
-      featured: true,
-      category: ["ci-cd", "devops", "docker", "security"],
-      shortDescription:
-        "Built an end-to-end Jenkins CI pipeline covering source checkout, " +
-        "code quality scanning, quality gate enforcement, security scanning, " +
-        "artifact management, Docker image publishing, and webhook notifications.",
-      description:
-        "Implemented a Jenkins-based CI workflow that automates the full " +
-        "application delivery process from source checkout through code " +
-        "quality analysis, security scanning, artifact packaging and upload " +
-        "to Sonatype Nexus, Docker image build and publish, and webhook " +
-        "notifications. The pipeline enforces quality gates so a failing " +
-        "SonarQube scan or Trivy security scan stops the build before " +
-        "any artifact reaches the registry.",
-      technologies: [
-        "Jenkins", "Git", "GitHub", "SonarQube", "Trivy",
-        "Sonatype Nexus", "Docker", "CI/CD", "Webhooks"
-      ],
-      highlights: [
-        "Git source checkout",
-        "SonarQube static code analysis",
-        "SonarQube Quality Gate enforcement",
-        "Application build/package stage",
-        "Trivy security scan on built artifact",
-        "Artifact archiving and packaging",
-        "Upload to Sonatype Nexus repository",
-        "Docker image build",
-        "Docker image publishing to container registry",
-        "Webhook notifications to Teams / Discord / Slack"
-      ],
-      github: null,              // REPLACE: "https://github.com/YOUR_USERNAME/jenkins-cicd"
-      demo: null,
-      architectureDiagram: null, // REPLACE: "assets/projects/jenkins-cicd/pipeline.svg"
+      architectureDiagram: "assets/projects/aws-3tier/architecture.svg",
       screenshots: [],
       pipeline: {
         type: "CI",
-        label: "Jenkins CI Pipeline",
+        label: "Jenkins Declarative CI/CD Pipeline",
         stages: [
-          { id: "checkout",     label: "Git Checkout",        description: "Pull application source code from the repository.", status: "completed" },
-          { id: "sonarqube",    label: "SonarQube Scan",      description: "Analyze source code for quality and maintainability.", status: "completed" },
-          { id: "quality-gate", label: "Quality Gate",        description: "Enforce quality thresholds — fail fast on violations.", status: "completed" },
-          { id: "build",        label: "Build",               description: "Build and package the application.", status: "completed" },
-          { id: "trivy",        label: "Trivy Security Scan", description: "Scan the built artifact for known vulnerabilities.", status: "completed" },
-          { id: "archive",      label: "Archive Artifacts",   description: "Archive build outputs in Jenkins.", status: "completed" },
-          { id: "package",      label: "Package Artifact",    description: "Package the artifact for repository upload.", status: "completed" },
-          { id: "nexus",        label: "Nexus Repository",    description: "Upload the packaged artifact to Sonatype Nexus.", status: "completed" },
-          { id: "docker-build", label: "Docker Build",        description: "Build the application Docker image.", status: "completed" },
-          { id: "docker-push",  label: "Docker Push",         description: "Publish the Docker image to the container registry.", status: "completed" },
-          { id: "notification", label: "Notifications",       description: "Send pipeline status via webhook notifications.", status: "completed" }
+          { id: "clean",        label: "Clean Workspace",        description: "Cleans up previous build remnants.", status: "completed" },
+          { id: "checkout",     label: "Git Checkout",           description: "Clones tracked repository branch using credentials.", status: "completed" },
+          { id: "sonarqube",    label: "SonarQube & Gate",       description: "Static code inspection; pipeline aborts on quality failure.", status: "completed" },
+          { id: "trivy",        label: "Trivy Security Scan",    description: "Scans filesystem & dependencies for CVEs.", status: "completed" },
+          { id: "build-fe",     label: "Frontend Build",         description: "Compiles React 18 production bundle & configures Nginx.", status: "completed" },
+          { id: "package-be",   label: "Nexus Packaging",        description: "Compresses backend service & uploads to Sonatype Nexus.", status: "completed" },
+          { id: "ssh-deploy",   label: "Private SSH Deploy",     description: "Deploys to private backend EC2 with zero downtime.", status: "completed" },
+          { id: "health-alert", label: "Health & Notification",  description: "Verifies /health probe & sends Discord/Teams webhook alert.", status: "completed" }
         ]
       },
       deployment: {
         type: "CD",
-        label: "Jenkins → Argo CD → Kubernetes",
+        label: "Multi-AZ 3-Tier Traffic Flow",
         stages: [
-          { id: "jenkins",     label: "Jenkins",     description: "Build, scan, package, and publish application image."       },
-          { id: "argocd",      label: "Argo CD",     description: "GitOps controller synchronizes desired application state." },
-          { id: "kubernetes",  label: "Kubernetes",  description: "Runs and manages the containerized application."           },
-          { id: "application", label: "Application", description: "Application deployed and running inside Kubernetes."       }
+          { id: "edge",   label: "Route 53 + WAF",     description: "DNS resolution and application firewall DDoS protection." },
+          { id: "pubalb", label: "Public ALB (80)",    description: "Ingests public web requests across public subnets." },
+          { id: "nginx",  label: "Nginx Web (ASG)",    description: "Serves React SPA assets & reverse proxies /api/ requests." },
+          { id: "intalb", label: "Internal ALB",       description: "Forwards API traffic to private Node.js backend nodes." },
+          { id: "nodejs", label: "Node.js API",        description: "Processes business logic & REST endpoints on port 4000." },
+          { id: "rds",    label: "RDS MySQL Multi-AZ", description: "Primary transactional storage node with synchronous standby." }
         ]
       },
-      notes: null
+      notes: "Production-grade enterprise isolation where backend compute and data layers have zero direct internet access."
     },
 
     {
-      id: "kubernetes-argocd",
-      title: "Kubernetes + Argo CD GitOps Deployment",
-      status: "in-progress",
+      id: "springboot-rest-api",
+      title: "Full Stack Spring Boot REST API Architecture",
+      status: "completed",
       featured: true,
-      category: ["kubernetes", "gitops", "ci-cd"],
+      category: ["docker", "ci-cd", "infrastructure-as-code", "devops"],
       shortDescription:
-        "Building a GitOps deployment workflow using Jenkins CI, Argo CD, and Kubernetes.",
+        "Containerized full-stack API architecture featuring Spring Boot 3.2 (Java 21), Swagger UI OpenAPI 3, PostgreSQL 16, React 18 SPA, automated via Jenkins CI/CD pipeline and Terraform Infrastructure as Code (IaC).",
       description:
-        "Currently extending the Jenkins CI pipeline into Kubernetes-based " +
-        "continuous delivery. Application deployment configuration is " +
-        "maintained in Git, and Argo CD is used to reconcile the Kubernetes " +
-        "cluster state with the desired state defined in the repository.",
+        "Engineered a production-ready containerized full-stack architecture combining a Spring Boot 3.2 REST API on Java 21 with a modern React 18 Single Page Application. Persistence is managed via PostgreSQL 16 with named Docker volume mapping and Spring Data JPA / Hibernate ORM. Features automated OpenAPI 3 interactive Swagger UI documentation at /swagger-ui.html, Actuator health monitoring probes, WebMvcConfigurer CORS security filtering with preflight caching, multi-stage container orchestration via Docker Compose, a declarative Jenkins CI pipeline for automated testing and container publishing, and Terraform IaC configuration for repeatable cloud provisioning.",
       technologies: [
-        "Kubernetes", "Argo CD", "GitOps", "Docker", "Jenkins", "Git"
+        "Spring Boot 3", "Java 21", "React 18", "Docker", "Docker Compose",
+        "PostgreSQL 16", "Swagger / OpenAPI", "Spring Data JPA", "Hibernate",
+        "Jenkins", "Terraform", "CI/CD", "IaC", "Nginx", "Vite", "REST API"
       ],
       highlights: [
-        "Git as the source of deployment configuration",
-        "Kubernetes application manifests",
-        "Argo CD synchronization",
-        "GitOps deployment workflow",
-        "Containerized application deployment"
+        "Spring Boot 3.2 backend built with modern Java 21 LTS, Spring Data JPA, and Hibernate ORM",
+        "Multi-container Docker & Docker Compose orchestration with automated health check readiness dependencies",
+        "Interactive Swagger UI (OpenAPI 3) live documentation and API testing dashboard at /swagger-ui.html",
+        "PostgreSQL 16 relational store with persistent named Docker volume and transactional schema integrity",
+        "React 18 Single Page Application with Vite, responsive glassmorphism UI, live health monitor, and CRUD dashboard",
+        "WebMvcConfigurer CORS security filter with allowed origins, methods, and 1-hour preflight caching",
+        "Automated via Jenkins CI pipeline executing unit tests, code verification, and Docker registry publishing",
+        "Terraform Infrastructure as Code (IaC) templates for automated cloud environment provisioning"
       ],
-      github: null,
+      github: "https://github.com/EvergreenImmortal-1824",
       demo: null,
-      architectureDiagram: null,
+      architectureDiagram: "assets/projects/springboot-docker/architecture.svg",
       screenshots: [],
-      pipeline: null,
-      deployment: {
-        type: "CD",
-        label: "GitOps Deployment Flow",
+      pipeline: {
+        type: "CI",
+        label: "Jenkins CI Pipeline (Spring Boot + React)",
         stages: [
-          { id: "source",      label: "Git Repository", description: "Application and deployment config stored in Git."    },
-          { id: "jenkins",     label: "Jenkins CI",     description: "Build, test, scan, and publish the application image." },
-          { id: "argocd",      label: "Argo CD",        description: "Detect changes and synchronize desired state."         },
-          { id: "kubernetes",  label: "Kubernetes",     description: "Deploy and manage application workloads."              },
-          { id: "application", label: "Application",    description: "Application running in the Kubernetes environment."    }
+          { id: "checkout", label: "Git Checkout",       description: "Clones tracked repository branch from GitHub.", status: "completed" },
+          { id: "build",    label: "Maven Build & Test", description: "Compiles Java 21 and runs Spring Boot unit tests.", status: "completed" },
+          { id: "fe-build", label: "Vite React Build",   description: "Compiles React 18 SPA production bundle.", status: "completed" },
+          { id: "compose",  label: "Docker Compose",     description: "Builds multi-container images with health checks.", status: "completed" },
+          { id: "push",     label: "Registry Push",      description: "Pushes verified images to container registry.", status: "completed" }
         ]
       },
-      notes:
-        "This project is currently in progress and will be updated as implementation milestones are completed."
-    }
-    ,{
-      id: "test-project",
-      title: "Terraform AWS Infrastructure",
-      status: "planned",
-      featured: false,
-      category: ["aws", "infrastructure-as-code"],
-      shortDescription: "Test project — demonstrating extensibility.",
-      description: "Temporary test project verifying data-driven architecture.",
-      technologies: ["Terraform", "AWS"],
-      highlights: [],
-      github: null,
+      deployment: {
+        type: "CD",
+        label: "Terraform IaC & Container Flow",
+        stages: [
+          { id: "terraform", label: "Terraform IaC",          description: "Provisions cloud VPC, security groups, and storage." },
+          { id: "browser",   label: "React SPA (Port 3000)",  description: "Client browser interacting with Vite/Nginx frontend." },
+          { id: "cors",      label: "CORS Security Filter",    description: "Validates allowed origins, HTTP methods & preflight cache." },
+          { id: "api",       label: "Spring Boot 3 (Port 8080)", description: "REST controllers, JPA repositories, Actuator & Swagger UI." },
+          { id: "postgres", label: "PostgreSQL 16 (Port 5432)", description: "Relational persistence with Docker persistent volume pgdata." }
+        ]
+      },
+      notes: "Configured with both Docker Compose multi-container execution and Jenkins CI & Terraform IaC automation."
+    },
+
+    {
+      id: "ecommerce-microservices",
+      title: "Dockerized E-Commerce Microservices & React SPA Platform",
+      status: "completed",
+      featured: true,
+      category: ["docker", "microservices", "ci-cd", "infrastructure-as-code", "devops"],
+      shortDescription:
+        "Full-stack microservices e-commerce platform featuring Nginx API Gateway, independent Auth, Product, and Order services with isolated MySQL schemas, containerized with Docker and automated via Jenkins CI/CD & Terraform.",
+      description:
+        "Architected a containerized microservices e-commerce platform built on Node.js, Express, MySQL, JWT authentication, and a modern React SPA frontend. Features an Nginx API Gateway reverse proxying traffic on Port 8080 to three decoupled microservices: Auth Service (Port 5001, bcryptjs, JWT), Product Catalog Service (Port 5002, search, filtering, sorting), and Order Service (Port 5003, ACID transactional order creation). Database layer maintains schema isolation (auth_db, catalog_db, order_db) on MySQL with Docker volume persistence. Automated with a Jenkins CI/CD pipeline and Terraform Infrastructure as Code (IaC) configuration.",
+      technologies: [
+        "Docker", "Docker Compose", "Microservices", "Node.js", "Express",
+        "React", "MySQL", "Nginx", "JWT", "Jenkins", "Terraform", "CI/CD", "IaC"
+      ],
+      highlights: [
+        "Decoupled microservices architecture: Nginx Gateway (:8080), Auth (:5001), Product (:5002), and Order (:5003)",
+        "Database schema isolation: Dedicated auth_db, catalog_db, and order_db on MySQL 3306 with persistent volume",
+        "Secure JWT authentication with bcryptjs password hashing and role-based customer/admin access control",
+        "Order processing engine using database transactions (ACID) to ensure atomic order and line-item creation",
+        "Modern React SPA frontend with live category filtering, search, dynamic sorting, and cart checkout",
+        "Multi-container Docker Compose orchestration (docker compose up --build) with single-command deployment",
+        "Jenkins CI/CD automation pipeline validating microservice unit tests, linting, and Docker container publishing",
+        "Terraform Infrastructure as Code (IaC) scripts defining cloud infrastructure, networking, and container environments"
+      ],
+      github: "https://github.com/EvergreenImmortal-1824",
       demo: null,
-      architectureDiagram: null,
+      architectureDiagram: "assets/projects/ecommerce-microservices/architecture.svg",
       screenshots: [],
-      pipeline: null,
-      deployment: null,
-      notes: null
+      pipeline: {
+        type: "CI",
+        label: "Jenkins Microservices CI Pipeline",
+        stages: [
+          { id: "checkout", label: "Git Checkout",        description: "Pull repository branch across all microservices.", status: "completed" },
+          { id: "test-svc", label: "Service Test Suite",  description: "Runs unit & integration tests for Auth, Product & Order.", status: "completed" },
+          { id: "build-fe", label: "React SPA Build",     description: "Compiles React production bundle with Vite.", status: "completed" },
+          { id: "docker",   label: "Docker Compose Build", description: "Builds Nginx, Auth, Product, Order & MySQL images.", status: "completed" },
+          { id: "push",     label: "Registry Publishing", description: "Publishes versioned microservice images to container registry.", status: "completed" }
+        ]
+      },
+      deployment: {
+        type: "CD",
+        label: "Terraform IaC & Microservices Flow",
+        stages: [
+          { id: "terraform", label: "Terraform IaC",           description: "Provisions cloud VPC, security groups, and compute." },
+          { id: "gateway",   label: "Nginx Gateway (Port 8080)", description: "Serves React SPA & dynamic path routing (/api/*)." },
+          { id: "auth",      label: "Auth Service (:5001)",    description: "JWT authentication, bcryptjs & auth_db schema." },
+          { id: "product",   label: "Product Service (:5002)", description: "Catalog, search, category filter & catalog_db." },
+          { id: "order",     label: "Order Service (:5003)",   description: "ACID transactions, order history & order_db." },
+          { id: "mysql",     label: "MySQL Cluster (:3306)",   description: "Multi-schema isolated persistence with Docker volume." }
+        ]
+      },
+      notes: "Fully containerized microservice boundaries with zero database state leakage across service domains."
+    },
+
+    {
+      id: "cash-management-system",
+      title: "Cash Management System (CMS): Enterprise Financial Microservices Engine",
+      status: "completed",
+      featured: true,
+      category: ["docker", "microservices", "ci-cd", "infrastructure-as-code", "devops"],
+      shortDescription:
+        "Enterprise financial cash management system featuring 6 containerized microservices, aggregated health monitoring, lightweight service orchestrator, automated via Jenkins CI/CD and Terraform IaC.",
+      description:
+        "Engineered an enterprise financial Cash Management System (CMS) designed for high-availability treasury operations. Comprises an API Gateway and Dashboard UI (Port 5000) orchestrating 5 dedicated financial microservices: Auth Service (Port 5001), Account Master Service (Port 5002), Transaction Engine (Port 5003), Analytics Service (Port 5004), and Reconciliation Service (Port 5005). Utilizes a custom start-services.js orchestrator for lightweight container execution, aggregated /health monitoring, and centralized logging. Automated with a Jenkins CI/CD pipeline and Terraform Infrastructure as Code (IaC) scripts for cloud deployment.",
+      technologies: [
+        "Docker", "Docker Compose", "Microservices", "Node.js", "Express",
+        "REST APIs", "Jenkins", "Terraform", "CI/CD", "IaC", "Bash"
+      ],
+      highlights: [
+        "6-tier financial microservices platform: API Gateway (:5000), Auth (:5001), Account (:5002), Transaction (:5003), Analytics (:5004), Reconciliation (:5005)",
+        "Single-container lightweight service orchestrator (start-services.js) or multi-container Docker Compose deployment",
+        "Aggregated system health endpoint (curl /health) querying health across all 5 financial microservice daemons",
+        "Real-time cash flow analytics and automated settlement reconciliation engine",
+        "Centralized Docker logging (docker compose logs -f) and graceful process termination handling",
+        "Jenkins CI/CD pipeline automating multi-service build verification, integration tests, and container packaging",
+        "Terraform IaC modules provisioning cloud infrastructure, security groups, and production compute targets"
+      ],
+      github: "https://github.com/EvergreenImmortal-1824",
+      demo: null,
+      architectureDiagram: "assets/projects/cash-management-system/architecture.svg",
+      screenshots: [],
+      pipeline: {
+        type: "CI",
+        label: "Jenkins CI Pipeline (Financial Engine)",
+        stages: [
+          { id: "checkout", label: "Git Checkout",        description: "Pull repository branch for CMS orchestrator & services.", status: "completed" },
+          { id: "lint",     label: "Dependency Audit",    description: "Audit npm dependencies & run static linting checks.", status: "completed" },
+          { id: "test",     label: "Service Test Suite",  description: "Validate transaction ledger & reconciliation algorithms.", status: "completed" },
+          { id: "docker",   label: "Docker Image Build",  description: "Build lightweight container with start-services.js.", status: "completed" },
+          { id: "publish",  label: "Registry Publishing", description: "Push verified container images to image registry.", status: "completed" }
+        ]
+      },
+      deployment: {
+        type: "CD",
+        label: "Terraform IaC & Microservices Topology",
+        stages: [
+          { id: "terraform", label: "Terraform IaC",           description: "Provisions cloud infrastructure & network security groups." },
+          { id: "gateway",   label: "API Gateway (:5000)",     description: "Dashboard UI, dynamic route proxy & aggregated /health." },
+          { id: "auth-acct", label: "Auth & Account Services", description: "Identity, permissions, and account masters (:5001, :5002)." },
+          { id: "tx-analyt", label: "Transaction & Analytics", description: "Financial ledger processing & cash flow metrics (:5003, :5004)." },
+          { id: "reconcil",  label: "Reconciliation (:5005)",  description: "Automated balance auditing & settlement verification." }
+        ]
+      },
+      notes: "Single-command containerized deployment (docker compose up -d) with aggregated health monitoring."
     }
 
-    // Add future projects here — no HTML change needed],
+  ],
 
   // ==========================================================
   // CERTIFICATIONS
@@ -358,4 +414,5 @@ const portfolioData = {
     siteLanguage:  "en"
   }
 };
+
 
